@@ -1,0 +1,4 @@
+com\chariitha\authbackend\AuthBackendApplication.class
+com\chariitha\authbackend\repository\UserRepository.class
+com\chariitha\authbackend\model\User.class
+com\chariitha\authbackend\service\UserService.class
