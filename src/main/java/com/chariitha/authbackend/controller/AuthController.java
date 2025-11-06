@@ -8,18 +8,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
+@RestController       
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173") 
 public class AuthController {
 
     @Autowired
+
+
     private UserRepository userRepository;
 
     //  Signup API
-    @PostMapping("/signup")
+    @PostMapping("/signup") // creates an API endpoint that handles POST requests from frontend
     public ResponseEntity<?> signup(@RequestBody User user) {
         System.out.println("Signup request received for: " + user.getEmail());
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    if (!user.getEmail().matches(emailRegex)) {
+        return ResponseEntity.badRequest().body("Invalid email format!");
+    }      //Send error message to frontend.
 
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
 
@@ -27,7 +33,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("User already exists with this email!");
         }
 
-        userRepository.save(user);
+        userRepository.save(user); //if user is new it saves users details in database
         return ResponseEntity.ok("Signup successful!");
     }
      @PostMapping("/login")
@@ -42,19 +48,20 @@ public ResponseEntity<?> login(@RequestBody User user) {
 
     User dbUser = existingUser.get();
 
-    if (!dbUser.getPassword().equals(user.getPassword())) {
+    if (!dbUser.getPassword().equals(user.getPassword())) { 
         return ResponseEntity.badRequest().body("Invalid password!");
     }
 
     return ResponseEntity.ok("Login successful!");
 }
 
-    // Test API (for checking backend is working)
+    
     @GetMapping("/test")
     public String test() {
         return "Hello from Spring Boot Backend1 ";
     }
 }
+
 
 
 
