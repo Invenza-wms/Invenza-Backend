@@ -13,11 +13,12 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")  //  your frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // ✅ include OPTIONS
+                        .allowedOrigins("http://localhost:5175")  //  your frontend
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // include OPTIONS
                         .allowedHeaders("*")  //  allow all headers
                         .allowCredentials(true);
             }
         };
     }
 }
+
